@@ -34,6 +34,7 @@ class Maze {
             let i = i + 1;
         }
 
+        do slots.dispose();
         do Memory.deAlloc(this);
         return;
     }

@@ -13,6 +13,7 @@ class Pirate {
     }
 
     method void dispose() {
+        // maze object will be diposed by game
         do Memory.deAlloc(this);
         return;
     }
