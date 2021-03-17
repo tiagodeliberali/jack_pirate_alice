@@ -58,16 +58,6 @@ class Pirate {
 
         let slot = maze.getSlot(row, column);
 
-        // debug info
-        // do Output.moveCursor(0, 0);
-        // do Output.printString("rand ");
-        // do Output.printInt(rand.rand());
-        // do Output.println();
-        // do Output.printString("rand mod 4 ");
-        // do Output.printInt(GameMath.remainder(rand.rand(), 4));
-        // do Output.println();
-
-
         do erase();
 
         // A
