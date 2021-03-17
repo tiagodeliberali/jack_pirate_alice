@@ -1,12 +1,16 @@
 class Main {
     function void main() {
         var Game game;
-        var bool exit;
+        var int level;
 
-        let game = Game.new();
+        let level = StartScreen.getLevel();
 
-        do game.run();
-        do game.dispose();
+            let game = Game.new(level);
+
+            do game.run();
+            do game.dispose();
+
+            do WinScreen.showMessage();
 
         return;
     }

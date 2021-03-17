@@ -1,0 +1,21 @@
+class WinScreen {
+    function void showMessage() {
+        var char anyChar;
+
+        do Screen.clearScreen();
+        do Output.moveCursor(2, 0);
+
+        do Output.printString("You got it!!!!");
+        do Output.println();
+        do Output.println();
+        do Output.printString("You found the treasure!!!!");
+        do Output.println();
+        do Output.println();
+        do Output.println();
+        do Output.printString("Press anything to continue...");
+        let anyChar = Keyboard.readChar();
+
+        return;
+
+    }
+}

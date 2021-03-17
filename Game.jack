@@ -3,8 +3,24 @@ class Game {
     field Maze maze;
     field Treasure treasure;
 
-    constructor Game new() {
-        let maze = Maze.new(4, 5, 4, 8);
+    constructor Game new(int level) {
+        do Output.moveCursor(0, 0);
+        do Screen.clearScreen();
+        do Output.printString("Go, pirate Alice! Find the treasure!!!");
+
+        // build maze based on level
+        if (level = 1) {
+            let maze = Maze.new(3, 6, 4, 8);
+        }
+
+        if (level = 2) {
+            let maze = Maze.new(2, 4, 6, 12);
+        }
+
+        if (level = 3) {
+            let maze = Maze.new(1, 1, 9, 19);
+        }
+
         do MazeBuilder.build(maze);
         do maze.draw();
 
@@ -17,6 +33,7 @@ class Game {
     method void dispose() {
         do pirate.dispose();
         do maze.dispose();
+        do treasure.dispose();
         do Memory.deAlloc(this);
         return;
     }
