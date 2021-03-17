@@ -1,6 +1,7 @@
 class Pirate {
     field int row, column;
     field Maze maze;
+    field Rand rand;
 
     constructor Pirate new(int setRow, int setColumn, Maze setMaze) {
         let row = setRow;
@@ -8,6 +9,8 @@ class Pirate {
         let maze = setMaze;
 
         do draw();
+
+        let rand = Rand.new();
 
         return this;
     }
@@ -54,6 +57,16 @@ class Pirate {
         let keyDownPressed = (key = 87);
 
         let slot = maze.getSlot(row, column);
+
+        // debug info
+        do Output.moveCursor(0, 0);
+        do Output.printString("rand ");
+        do Output.printInt(rand.rand());
+        do Output.println();
+        do Output.printString("rand mod 4 ");
+        do Output.printInt(GameMath.remainder(rand.rand(), 4));
+        do Output.println();
+
 
         do erase();
 

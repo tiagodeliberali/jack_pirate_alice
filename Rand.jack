@@ -1,9 +1,25 @@
-// { m_z = 36969 * (m_z & 65535) + (m_z >> 8); return m_z; }
+// from https://www.cs.utah.edu/~germain/PPS/Topics/random_numbers.html
+// A = Constant 1;
+// M = Constant 2;
+
+// Q = M / A;
+//     R = M % A;
+
+//     number = ( A * (number mod Q)    ) -
+//             ( R * floor(number / Q) );
+
+// if (number is negative)
+//     number = number + M;
+// end
 class Rand {
     field int seed;
+    static int a, m;
 
     constructor Rand new() {
-        let seed = 3699;
+        let seed = 3;
+        let a = 1121;
+        let m = 7919;
+
         return this;
     }
 
@@ -13,8 +29,19 @@ class Rand {
     }
 
     method int rand() {
-        let seed = (seed + (seed / 256));
+        var int q, r;
+
+        let q = m / a;
+        let r = GameMath.remainder(m, a);
+
+        let seed = (a * GameMath.remainder(seed, q)) - (r * (seed/q));
+
+        if (seed < 0) {
+            let seed = -seed;
+        }
 
         return seed;
     }
 }
+
+// 
