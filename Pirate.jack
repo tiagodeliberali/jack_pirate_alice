@@ -94,4 +94,12 @@ class Pirate {
 
         return;
     }
+
+    method int getRow() {
+        return row;
+    }
+
+    method int getColumn() {
+        return column;
+    }
 }

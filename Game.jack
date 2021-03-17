@@ -1,13 +1,15 @@
 class Game {
     field Pirate pirate;
     field Maze maze;
+    field Treasure treasure;
 
     constructor Game new() {
         let maze = Maze.new(4, 5, 4, 8);
         do MazeBuilder.build(maze);
         do maze.draw();
 
-        let pirate = Pirate.new(2, 2, maze);
+        let pirate = Pirate.new(0, 0, maze);
+        let treasure = Treasure.new(maze);
 
         return this;
     }
@@ -31,6 +33,7 @@ class Game {
             }
 
             do pirate.move(key);
+            let exit = treasure.found(pirate);
 
             // waits the key release
             while (~(key = 0)) {

@@ -1,0 +1,47 @@
+class Treasure {
+    field Maze maze;
+    field int row, column;
+
+    constructor Treasure new(Maze setMaze) {
+        let maze = setMaze;
+        let row = maze.getRows() - 1;
+        let column = maze.getColumns() - 1;
+
+        do draw();
+        
+        return this;
+    }
+
+    method void dispose() {
+        // maze object will be diposed by game
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do drawTreasure();
+        return;
+    }
+
+    method void drawTreasure() {
+        var int drawRow, drawColumn, size, margin;
+        let size = Wall.size();
+        let margin = Wall.thickness();
+
+        let drawRow = (maze.getInitialRow() + row) * size;
+        let drawColumn = (maze.getInitialColumn() + column) * size;
+
+        do Screen.drawRectangle(
+            drawColumn + (2 * margin),
+            drawRow + (2 * margin),
+            drawColumn + size - (2 * margin),
+            drawRow + size - (2 * margin));
+
+        return;
+    }
+
+    method boolean found(Pirate pirate) {
+        return (pirate.getRow() = row) & (pirate.getColumn() = column);
+    }
+}

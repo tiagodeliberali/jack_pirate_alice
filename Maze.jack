@@ -65,4 +65,12 @@ class Maze {
     method int getInitialColumn() {
         return initialColumn;
     }
+
+    method int getRows() {
+        return rows;
+    }
+
+    method int getColumns() {
+        return columns;
+    }
 }
