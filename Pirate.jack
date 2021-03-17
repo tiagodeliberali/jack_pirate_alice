@@ -1,9 +1,11 @@
 class Pirate {
     field int row, column;
+    field Maze maze;
 
-    constructor Pirate new(int setRow, int setColumn) {
+    constructor Pirate new(int setRow, int setColumn, Maze setMaze) {
         let row = setRow;
         let column = setColumn;
+        let maze = setMaze;
 
         do draw();
 
@@ -15,47 +17,79 @@ class Pirate {
         return;
     }
 
+    method void drawPirate() {
+        var int drawRow, drawColumn, size, margin;
+        let size = Wall.size();
+        let margin = Wall.thickness();
+
+        let drawRow = (maze.getInitialRow() + row) * size;
+        let drawColumn = (maze.getInitialColumn() + column) * size;
+
+        do Screen.drawRectangle(
+            drawColumn + (2 * margin),
+            drawRow + (2 * margin),
+            drawColumn + size - (2 * margin),
+            drawRow + size - (2 * margin));
+
+        return;
+    }
+
     method void draw() {
         do Screen.setColor(true);
-        do Screen.drawRectangle(column, row, column + 16, row + 16);
+        do drawPirate();
         return;
     }
 
     method void erase() {
         do Screen.setColor(false);
-        do Screen.drawRectangle(column, row, column + 16, row + 16);
+        do drawPirate();
         return;
     }
 
     method void move(int key) {
+        var Slot slot;
+        var boolean keyDownPressed;
+
+        let keyDownPressed = (key = 87);
+
+        let slot = maze.getSlot(row, column);
+
+        // debug info
+        do Output.moveCursor(0, 0);
+        do Output.printString("slot left ");
+        do Output.printInt(slot.getNeighborType(Wall.left()));
+        do Output.println();
+        do Output.printString("slot can move left ");
+        do Output.printInt(slot.canMove(Wall.left()));
+        do Output.println();
+        do Output.printString("slot right ");
+        do Output.printInt(slot.getNeighborType(Wall.right()));
+        do Output.println();
+        do Output.printString("slot can move right ");
+        do Output.printInt(slot.canMove(Wall.right()));
+
+
         do erase();
 
         // A
-        if (key = 65) {
-            let column = column - 16;
+        if ((key = 65) & slot.canMove(Wall.left())) {
+            let column = column - 1;
         }
 
         // D
-        if (key = 68) {
-            let column = column + 16;
-        }
-
-        // S
-        if (key = 87) {
-            let row = row - 16;
+        if ((key = 68) & slot.canMove(Wall.right())) {
+            let column = column + 1;
         }
 
         // W
-        if (key = 83) {
-            let row = row + 16;
+        if ((key = 87) & slot.canMove(Wall.up())) {
+            let row = row - 1;
         }
 
-        // clip values inside screen
-        let row = Math.max(0, row);
-        let row = Math.min(239, row);
-
-        let column = Math.max(0, column);
-        let column = Math.min(495, column);
+        // S
+        if ((key = 83) & slot.canMove(Wall.down())) {
+            let row = row + 1;
+        }
 
         do draw();
 

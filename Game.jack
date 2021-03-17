@@ -1,14 +1,19 @@
 class Game {
     field Pirate pirate;
+    field Maze maze;
 
     constructor Game new() {
-        let pirate = Pirate.new(0,127);
+        let maze = Maze.new(4, 5, 4, 8);
+        do maze.draw();
+
+        let pirate = Pirate.new(2, 2, maze);
 
         return this;
     }
 
     method void dispose() {
         do pirate.dispose();
+        do maze.dispose();
         do Memory.deAlloc(this);
         return;
     }

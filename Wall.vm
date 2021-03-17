@@ -10,3 +10,9 @@ return
 function Wall.right 0
 push constant 3
 return
+function Wall.thickness 0
+push constant 2
+return
+function Wall.size 0
+push constant 24
+return

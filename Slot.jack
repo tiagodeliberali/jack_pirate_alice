@@ -19,24 +19,49 @@ class Slot {
             let neighbors[Wall.left()] = 1;
         }
 
-        if (~(row = totalRows)) {
+        if (~(row = (totalRows - 1))) {
             let neighbors[Wall.down()] = 1;
         }
 
-        if (~(column = totalColumns)) {
+        if (~(column = (totalColumns - 1))) {
             let neighbors[Wall.right()] = 1;
         }
         
         return this;
     }
 
-    method void draw(int initialRow, int initialColumn) {
-        var int drawRow, drawColumn;
-        let drawRow = (initialRow + row) * 16;
-        let drawColumn = (initialColumn + column) * 16;
+    method void dispose() {
+        do neighbors.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
 
-        do Screen.drawRectangle(drawColumn, drawRow, drawColumn + 16, drawRow + 16);
+    method void draw(int initialRow, int initialColumn) {
+        var int drawRow, drawColumn, size, margin;
+        let size = Wall.size();
+        let margin = Wall.thickness();
+
+        let drawRow = (initialRow + row) * size;
+        let drawColumn = (initialColumn + column) * size;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(drawColumn, drawRow, drawColumn + size, drawRow + size);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(
+            drawColumn + margin, 
+            drawRow + margin, 
+            drawColumn + size - margin, 
+            drawRow + size - margin);
 
         return;
+    }
+
+    method int getNeighborType(int direction) {
+        return neighbors[direction];
+    }
+
+    method boolean canMove(int direction) {
+        return ~ (neighbors[direction] = 0); // avoid null neighbors
     }
 }

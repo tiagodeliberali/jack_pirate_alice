@@ -14,4 +14,12 @@ class Wall {
     function int right() {
         return 3;
     }
+
+    function int thickness() {
+        return 2;
+    }
+
+    function int size() {
+        return 24;
+    }
 }

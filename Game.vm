@@ -1,10 +1,20 @@
 function Game.new 0
-push constant 1
+push constant 2
 call Memory.alloc 1
 pop pointer 0
-push constant 0
-push constant 127
-call Pirate.new 2
+push constant 4
+push constant 5
+push constant 4
+push constant 8
+call Maze.new 4
+pop this 1
+push this 1
+call Maze.draw 1
+pop temp 0
+push constant 2
+push constant 2
+push this 1
+call Pirate.new 3
 pop this 0
 push pointer 0
 return
@@ -13,6 +23,9 @@ push argument 0
 pop pointer 0
 push this 0
 call Pirate.dispose 1
+pop temp 0
+push this 1
+call Maze.dispose 1
 pop temp 0
 push pointer 0
 call Memory.deAlloc 1

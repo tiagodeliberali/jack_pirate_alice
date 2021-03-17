@@ -1,0 +1,67 @@
+class Maze {
+    field int initialRow, initialColumn, rows, columns;
+    field Array slots;
+
+    constructor Maze new(int setInitialRow, int setInitialColumn, int setRows, int setColumns) {
+        var int total, i;
+
+        let initialRow = setInitialRow;
+        let initialColumn = setInitialColumn;
+        let rows = setRows;
+        let columns = setColumns;
+
+        let total = rows * columns;
+
+        let slots = Array.new(total);
+
+        while (i < total) {
+            let slots[i] = Slot.new(i, rows, columns);
+            let i = i + 1;
+        }
+
+        return this;
+    }
+
+    method void dispose() {
+        var int total, i;
+        var Slot tempSlot;
+
+        let total = rows * columns;
+
+        while (i < total) {
+            let tempSlot = slots[i];
+            do tempSlot.dispose();
+            let i = i + 1;
+        }
+
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void draw() {
+        var int total, i;
+        var Slot tempSlot;
+
+        let total = rows * columns;
+
+        while (i < total) {
+            let tempSlot = slots[i];
+            do tempSlot.draw(initialRow, initialColumn);
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    method Slot getSlot(int row, int column) {
+        return slots[row * columns + column];
+    }
+
+    method int getInitialRow() {
+        return initialRow;
+    }
+
+    method int getInitialColumn() {
+        return initialColumn;
+    }
+}
