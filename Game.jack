@@ -10,15 +10,15 @@ class Game {
 
         // build maze based on level
         if (level = 1) {
-            let maze = Maze.new(3, 6, 4, 8);
+            let maze = Maze.new(4, 6, 8, 16);
         }
 
         if (level = 2) {
-            let maze = Maze.new(2, 4, 6, 12);
+            let maze = Maze.new(2, 4, 11, 23);
         }
 
         if (level = 3) {
-            let maze = Maze.new(1, 1, 9, 19);
+            let maze = Maze.new(1, 1, 14, 30);
         }
 
         do MazeBuilder.build(maze);

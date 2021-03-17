@@ -35,6 +35,6 @@ class Wall {
     }
 
     function int size() {
-        return 24;
+        return 16;
     }
 }
