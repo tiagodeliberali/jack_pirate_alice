@@ -19,25 +19,27 @@ class Treasure {
     }
 
     method void draw() {
+        var int drawRow, drawColumn, memAddress;
+
+        let drawRow = maze.getInitialRow() + row;
+        let drawColumn = maze.getInitialColumn() + column;
+
+        let memAddress = 16384 + (drawRow * 512) + drawColumn;
+
         do Screen.setColor(true);
-        do drawTreasure();
-        return;
-    }
 
-    method void drawTreasure() {
-        var int drawRow, drawColumn, size, margin;
-        let size = Wall.size();
-        let margin = Wall.thickness();
-
-        let drawRow = (maze.getInitialRow() + row) * size;
-        let drawColumn = (maze.getInitialColumn() + column) * size;
-
-        do Screen.drawRectangle(
-            drawColumn + (2 * margin),
-            drawRow + (2 * margin),
-            drawColumn + size - (2 * margin),
-            drawRow + size - (2 * margin));
-
+        do Memory.poke(memAddress+96, 8184 | Memory.peek(memAddress+96));
+        do Memory.poke(memAddress+128, 15020 | Memory.peek(memAddress+128));
+        do Memory.poke(memAddress+160, 12300 | Memory.peek(memAddress+160));
+        do Memory.poke(memAddress+192, 12300 | Memory.peek(memAddress+192));
+        do Memory.poke(memAddress+224, 12684 | Memory.peek(memAddress+224));
+        do Memory.poke(memAddress+256, 12020 | Memory.peek(memAddress+256));
+        do Memory.poke(memAddress+288, 12684 | Memory.peek(memAddress+288));
+        do Memory.poke(memAddress+320, 12300 | Memory.peek(memAddress+320));
+        do Memory.poke(memAddress+352, 15020 | Memory.peek(memAddress+352));
+        do Memory.poke(memAddress+384, 15020 | Memory.peek(memAddress+384));
+        do Memory.poke(memAddress+416, 8184 | Memory.peek(memAddress+416));
+    
         return;
     }
 
