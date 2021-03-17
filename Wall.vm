@@ -1,0 +1,12 @@
+function Wall.up 0
+push constant 0
+return
+function Wall.down 0
+push constant 1
+return
+function Wall.left 0
+push constant 2
+return
+function Wall.right 0
+push constant 3
+return

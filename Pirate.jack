@@ -1,0 +1,64 @@
+class Pirate {
+    field int row, column;
+
+    constructor Pirate new(int setRow, int setColumn) {
+        let row = setRow;
+        let column = setColumn;
+
+        do draw();
+
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(column, row, column + 16, row + 16);
+        return;
+    }
+
+    method void erase() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(column, row, column + 16, row + 16);
+        return;
+    }
+
+    method void move(int key) {
+        do erase();
+
+        // A
+        if (key = 65) {
+            let column = column - 16;
+        }
+
+        // D
+        if (key = 68) {
+            let column = column + 16;
+        }
+
+        // S
+        if (key = 87) {
+            let row = row - 16;
+        }
+
+        // W
+        if (key = 83) {
+            let row = row + 16;
+        }
+
+        // clip values inside screen
+        let row = Math.max(0, row);
+        let row = Math.min(239, row);
+
+        let column = Math.max(0, column);
+        let column = Math.min(495, column);
+
+        do draw();
+
+        return;
+    }
+}

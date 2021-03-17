@@ -1,0 +1,37 @@
+class Game {
+    field Pirate pirate;
+
+    constructor Game new() {
+        let pirate = Pirate.new(0,127);
+
+        return this;
+    }
+
+    method void dispose() {
+        do pirate.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void run() {
+        var boolean exit;
+        var char key;
+        let exit = false;
+
+        while (~exit) {
+            // identify a key pressed
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+            }
+
+            do pirate.move(key);
+
+            // waits the key release
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+            }
+        }
+
+        return;
+    }
+}

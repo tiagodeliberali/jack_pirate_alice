@@ -1,0 +1,17 @@
+class Wall {
+    function int up() {
+        return 0;
+    }
+
+    function int down() {
+        return 1;
+    }
+
+    function int left() {
+        return 2;
+    }
+
+    function int right() {
+        return 3;
+    }
+}

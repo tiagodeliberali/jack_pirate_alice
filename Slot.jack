@@ -1,0 +1,42 @@
+class Slot {
+    field int id, row, column;
+    field Array neighbors;
+
+    constructor Slot new(int setId, int totalRows, int totalColumns) {
+        let id = setId;
+
+        let row = setId / totalColumns;
+        let column = GameMath.remainder(setId, totalColumns);
+
+        let neighbors = Array.new(4);
+
+        // setup walls
+        if (~(row = 0)) {
+            let neighbors[Wall.up()] = 1;
+        }
+
+        if (~(column = 0)) {
+            let neighbors[Wall.left()] = 1;
+        }
+
+        if (~(row = totalRows)) {
+            let neighbors[Wall.down()] = 1;
+        }
+
+        if (~(column = totalColumns)) {
+            let neighbors[Wall.right()] = 1;
+        }
+        
+        return this;
+    }
+
+    method void draw(int initialRow, int initialColumn) {
+        var int drawRow, drawColumn;
+        let drawRow = (initialRow + row) * 16;
+        let drawColumn = (initialColumn + column) * 16;
+
+        do Screen.drawRectangle(drawColumn, drawRow, drawColumn + 16, drawRow + 16);
+
+        return;
+    }
+}
