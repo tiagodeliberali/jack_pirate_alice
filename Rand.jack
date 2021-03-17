@@ -1,0 +1,20 @@
+// { m_z = 36969 * (m_z & 65535) + (m_z >> 8); return m_z; }
+class Rand {
+    field int seed;
+
+    constructor Rand new() {
+        let seed = 3699;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int rand() {
+        let seed = (seed + (seed / 256));
+
+        return seed;
+    }
+}

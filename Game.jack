@@ -4,6 +4,7 @@ class Game {
 
     constructor Game new() {
         let maze = Maze.new(4, 5, 4, 8);
+        do maze.build();
         do maze.draw();
 
         let pirate = Pirate.new(2, 2, maze);

@@ -39,6 +39,17 @@ class Maze {
         return;
     }
 
+    method void build() {
+        var Rand rand;
+        var int next;
+        let rand = Rand.new();
+
+
+        let next = GameMath.remainder(rand.rand(), 4);
+
+        return;
+    }
+
     method void draw() {
         var int total, i;
         var Slot tempSlot;

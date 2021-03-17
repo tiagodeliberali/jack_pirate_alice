@@ -55,21 +55,6 @@ class Pirate {
 
         let slot = maze.getSlot(row, column);
 
-        // debug info
-        do Output.moveCursor(0, 0);
-        do Output.printString("slot left ");
-        do Output.printInt(slot.getNeighborType(Wall.left()));
-        do Output.println();
-        do Output.printString("slot can move left ");
-        do Output.printInt(slot.canMove(Wall.left()));
-        do Output.println();
-        do Output.printString("slot right ");
-        do Output.printInt(slot.getNeighborType(Wall.right()));
-        do Output.println();
-        do Output.printString("slot can move right ");
-        do Output.printInt(slot.canMove(Wall.right()));
-
-
         do erase();
 
         // A
