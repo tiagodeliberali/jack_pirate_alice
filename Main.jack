@@ -5,12 +5,12 @@ class Main {
 
         let level = StartScreen.getLevel();
 
-            let game = Game.new(level);
+        let game = Game.new(level);
 
-            do game.run();
-            do game.dispose();
+        do game.run();
+        do game.dispose();
 
-            do WinScreen.showMessage();
+        do WinScreen.showMessage();
 
         return;
     }
