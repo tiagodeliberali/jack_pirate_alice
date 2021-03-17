@@ -1,8 +1,11 @@
 class Slot {
     field int id, row, column;
     field Array neighbors;
+    field boolean visited;
 
     constructor Slot new(int setId, int totalRows, int totalColumns) {
+        let visited = false;
+
         let id = setId;
 
         let row = setId / totalColumns;
@@ -12,19 +15,19 @@ class Slot {
 
         // setup walls
         if (~(row = 0)) {
-            let neighbors[Wall.up()] = 1;
+            let neighbors[Wall.up()] = Wall.closedWall();
         }
 
         if (~(column = 0)) {
-            let neighbors[Wall.left()] = 1;
+            let neighbors[Wall.left()] = Wall.closedWall();
         }
 
         if (~(row = (totalRows - 1))) {
-            let neighbors[Wall.down()] = 1;
+            let neighbors[Wall.down()] = Wall.closedWall();
         }
 
         if (~(column = (totalColumns - 1))) {
-            let neighbors[Wall.right()] = 1;
+            let neighbors[Wall.right()] = Wall.closedWall();
         }
         
         return this;
@@ -37,9 +40,8 @@ class Slot {
     }
 
     method void draw(int initialRow, int initialColumn) {
-        var int drawRow, drawColumn, size, margin;
+        var int drawRow, drawColumn, size, topMargin, bottomMargin, leftMargin, rightMargin;
         let size = Wall.size();
-        let margin = Wall.thickness();
 
         let drawRow = (initialRow + row) * size;
         let drawColumn = (initialColumn + column) * size;
@@ -47,13 +49,66 @@ class Slot {
         do Screen.setColor(true);
         do Screen.drawRectangle(drawColumn, drawRow, drawColumn + size, drawRow + size);
 
+        // set margins
+        if (canMove(Wall.up())) {
+            let topMargin = 0; 
+        } else {
+            let topMargin = Wall.thickness();
+        }
+
+        if (canMove(Wall.down())) {
+            let bottomMargin = 0; 
+        } else {
+            let bottomMargin = Wall.thickness();
+        }
+
+        if (canMove(Wall.left())) {
+            let leftMargin = 0; 
+        } else {
+            let leftMargin = Wall.thickness();
+        }
+
+        if (canMove(Wall.right())) {
+            let rightMargin = 0; 
+        } else {
+            let rightMargin = Wall.thickness();
+        }
+
         do Screen.setColor(false);
         do Screen.drawRectangle(
-            drawColumn + margin, 
-            drawRow + margin, 
-            drawColumn + size - margin, 
-            drawRow + size - margin);
+            drawColumn + leftMargin, 
+            drawRow + topMargin, 
+            drawColumn + size - rightMargin, 
+            drawRow + size - bottomMargin);
 
+        return;
+    }
+
+    method void breakWall(int direction) {
+        let neighbors[direction] = Wall.openWall();
+        return;
+    }
+
+    method void breakOppositeWall(int direction) {
+        var int opposite;
+
+        if (direction = Wall.up()) {
+            let opposite = Wall.down();
+        }
+
+        if (direction = Wall.down()) {
+            let opposite = Wall.up();
+        }
+
+        if (direction = Wall.left()) {
+            let opposite = Wall.right();
+        }
+
+        if (direction = Wall.right()) {
+            let opposite = Wall.left();
+        }
+
+        let neighbors[opposite] = Wall.openWall();
         return;
     }
 
@@ -62,6 +117,27 @@ class Slot {
     }
 
     method boolean canMove(int direction) {
-        return ~ (neighbors[direction] = 0); // avoid null neighbors
+        return neighbors[direction] = Wall.openWall(); // avoid null neighbors
+    }
+
+    method void markVisited() {
+        let visited = true;
+        return;
+    }
+
+    method boolean isVisited() {
+        return visited;
+    }
+
+    method int getRow() {
+        return row;
+    }
+
+    method int getColumn() {
+        return column;
+    }
+
+    method int getId() {
+        return id;
     }
 }

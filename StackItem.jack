@@ -1,0 +1,29 @@
+class StackItem {
+    field int item;
+    field StackItem previous;
+
+    constructor StackItem new(int setItem, StackItem setPrevious) {
+        let item = setItem;
+        let previous = setPrevious;
+
+        return this;
+    }
+
+    method void dispose() {
+        if (~(previous = 0)) {
+            do previous.dispose();
+        }
+
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
+    method int getItem() {
+        return item;
+    }
+
+    method StackItem getPrevious() {
+        return previous;
+    }
+}

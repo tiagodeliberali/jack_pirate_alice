@@ -1,0 +1,44 @@
+class Stack {
+    field StackItem top;
+    field int count;
+
+    constructor Stack new () {
+        return this;
+    }
+
+    method int getCount() {
+        return count;
+    }
+
+    method void dispose() {
+        if (~(top = 0)) {
+            do top.dispose();
+        }
+
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void push(int item) {
+        var Stack newItem;
+
+        let newItem = StackItem.new(item, top);
+        let top = newItem;
+        let count = count + 1;
+
+        return;
+    }
+
+    method int pop() {
+        var StackItem previous;
+        var int item;
+
+        let previous = top.getPrevious();
+        let item = top.getItem();
+
+        let top = previous;
+        let count = count - 1;
+
+        return item;
+    }
+}

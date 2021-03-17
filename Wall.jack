@@ -1,4 +1,5 @@
 class Wall {
+    // directions
     function int up() {
         return 0;
     }
@@ -15,6 +16,20 @@ class Wall {
         return 3;
     }
 
+    // types of connections
+    function int noNeighbor() {
+        return 0;
+    }
+
+    function int closedWall() {
+        return 1;
+    }
+
+    function int openWall() {
+        return 2;
+    }
+
+    // details of walls
     function int thickness() {
         return 2;
     }

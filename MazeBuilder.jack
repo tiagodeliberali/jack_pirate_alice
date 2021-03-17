@@ -1,0 +1,111 @@
+class MazeBuilder {
+    function void build(Maze maze) {
+        var Rand rand;
+        var Slot currentSlot;
+        var Array slotNeighbors;
+        var Stack slotStack;
+        var boolean exit;
+        var int randomValue, randomNeighbor, nextRow, nextColumn;
+
+        let slotStack = Stack.new();
+        let rand = Rand.new();
+
+        let currentSlot = maze.getSlot(0, 0);
+
+        let exit = false;
+
+        while (~exit) {
+            do currentSlot.markVisited();
+
+            let slotNeighbors = MazeBuilder.getNeighbors(currentSlot, maze);
+            
+            if (slotNeighbors[0] = 0) {
+                if (slotStack.getCount() = 0) {
+                    let exit = true;
+                } else {
+                    let currentSlot = slotStack.pop();
+                }
+            } else {
+                do slotStack.push(currentSlot);
+
+                let nextRow = currentSlot.getRow();
+                let nextColumn = currentSlot.getColumn();
+
+                let randomValue = rand.rand();
+                let randomNeighbor = slotNeighbors[GameMath.remainder(randomValue, slotNeighbors[0]) + 1];
+
+                do currentSlot.breakWall(randomNeighbor);
+
+                if (randomNeighbor = Wall.up()) {
+                    let nextRow = nextRow - 1;
+                }
+
+                if (randomNeighbor = Wall.down()) {
+                    let nextRow = nextRow + 1;
+                }
+
+                if (randomNeighbor = Wall.left()) {
+                    let nextColumn = nextColumn - 1;
+                }
+
+                if (randomNeighbor = Wall.right()) {
+                    let nextColumn = nextColumn + 1;
+                }
+
+                let currentSlot = maze.getSlot(nextRow, nextColumn);
+                do currentSlot.breakOppositeWall(randomNeighbor);
+            }
+        }
+
+        return;
+    }
+
+    function Array getNeighbors(Slot currentSlot, Maze maze) {
+        var Array result;
+        var int total;
+        var Slot checkSlot;
+
+        let result = Array.new(5);
+
+        // get valid neighbours
+        if (~(currentSlot.getNeighborType(Wall.up()) = 0)) {
+            let checkSlot = maze.getSlot(currentSlot.getRow() - 1, currentSlot.getColumn());
+
+            if (~checkSlot.isVisited()) {
+                let total = total + 1;
+                let result[total] = Wall.up();
+            }           
+        }
+
+        if (~(currentSlot.getNeighborType(Wall.down()) = 0)) {
+            let checkSlot = maze.getSlot(currentSlot.getRow() + 1, currentSlot.getColumn());
+
+            if (~checkSlot.isVisited()) {
+                let total = total + 1;
+                let result[total] = Wall.down();
+            }           
+        }
+
+        if (~(currentSlot.getNeighborType(Wall.left()) = 0)) {
+            let checkSlot = maze.getSlot(currentSlot.getRow(), currentSlot.getColumn() - 1);
+
+            if (~checkSlot.isVisited()) {
+                let total = total + 1;
+                let result[total] = Wall.left();
+            }           
+        }
+
+        if (~(currentSlot.getNeighborType(Wall.right()) = 0)) {
+            let checkSlot = maze.getSlot(currentSlot.getRow(), currentSlot.getColumn() + 1);
+
+            if (~checkSlot.isVisited()) {
+                let total = total + 1;
+                let result[total] = Wall.right();
+            }           
+        }
+
+        let result[0] = total;
+
+        return result;
+    }
+}
